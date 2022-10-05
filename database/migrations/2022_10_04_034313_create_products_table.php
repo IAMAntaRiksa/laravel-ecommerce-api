@@ -19,14 +19,18 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('user_id');
             $table->text('content');
             $table->integer('weight');
+            $table->integer('stock');
             $table->bigInteger('price');
             $table->integer('discount')->nullable();
             $table->timestamps();
 
             // relationship category
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            // relationship category
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
