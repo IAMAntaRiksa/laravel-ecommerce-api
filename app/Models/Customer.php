@@ -16,4 +16,9 @@ class Customer extends Model
         'password',
         'remember_token'
     ];
+
+    public function invoices()
+    {
+        $this->hasMany(Invoice::class);
+    }
 }

@@ -25,5 +25,13 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/categories', CategoryController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
         // product
         Route::apiResource('/products', ProductController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
+        // invoice 
+        Route::apiResource('/invoices', InvoiceController::class, ['except' => ['store, create, delete, update, edit'], 'as' => 'admin']);
+        // customer
+        Route::get('/customers', [CustomerController::class, 'index', ['as' => 'admin']]);
+        // Slider 
+        Route::apiResource('/sliders', SliderController::class, ['except' => ['show, edit, update, create'], 'as' => 'admin']);
+        // User 
+        Route::apiResource('/users', UserController::class, ['except' => ['edit, update'], 'as' => 'admin']);
     });
 });

@@ -16,4 +16,14 @@ class Cart extends Model
         'price',
         'weight'
     ];
+
+    public function product()
+    {
+        $this->belongsTo(Product::class);
+    }
+
+    public function customer()
+    {
+        $this->belongsTo(Customer::class);
+    }
 }
