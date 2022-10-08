@@ -25,7 +25,7 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2000',
-            'name' => 'required',
+            'name' => 'required|unique:categories',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
         // upload image
         $image = $request->file('image');
-        $image->storeAs('/public/categories', $image->hashName());
+        $image->storeAs('/public/categories/', $image->hashName());
 
         $category = Category::create([
             'image' => $image->hashName(),
@@ -55,6 +55,7 @@ class CategoryController extends Controller
         }
         return new CategoryResource(false, 'Detail Data Category Tidak DItemukan!', null);
     }
+
     public function update(Request $request, Category $category)
     {
         $validator = Validator::make($request->all(), [

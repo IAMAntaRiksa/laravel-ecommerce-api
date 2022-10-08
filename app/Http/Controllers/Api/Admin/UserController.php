@@ -52,4 +52,51 @@ class UserController extends Controller
             return new UserResource(false, 'Detail Data User tidak ditemukan', $user);
         }
     }
+
+    public function update(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $user->id,
+            'password' => 'confirmed'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        if ($request->password == "") {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+        } else {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+        }
+        if ($user) {
+            return new UserResource(true, 'user behasil diupdate', $user);
+        } else {
+            return new UserResource(false, 'user gagal diupdate', $user);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if ($user->delete() == true) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasi dihapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'gagal di hapus'
+            ]);
+        }
+    }
 }
