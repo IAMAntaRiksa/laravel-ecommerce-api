@@ -17,7 +17,7 @@ class Slider extends Model
     public function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => asset('storage/public/' . $value)
+            get: fn ($value) => asset('/storage/public/' . $value)
         );
     }
 }

@@ -34,9 +34,18 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
     public function order()
     {
         $this->belongsTo(Order::class);
+    }
+    public function reviewAvgRating(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? substr($value, 0, 5) : 0,
+        );
     }
 }

@@ -15,4 +15,12 @@ class Order extends Model
         'qty',
         'price',
     ];
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+    public function product()
+    {
+        $this->belongsTo(Product::class);
+    }
 }
